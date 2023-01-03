@@ -49,4 +49,4 @@ for tweet in req:
         "embeds": embeds
     }
 
-    requests.post(webhook, json=message)
+    requests.post(webhook, json=message)tt
