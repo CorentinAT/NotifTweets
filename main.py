@@ -10,8 +10,9 @@ headers = {
 }
 
 url = "https://api.twitter.com/1.1/statuses/user_timeline.json"
+
 params = {
-    "screen_name": "cocosupersympa",
+    "screen_name": "rebeudeter",
     "exclude_replies": True,
     "tweet_mode": "extended",
 }
@@ -23,7 +24,6 @@ req = response.json()
 for tweet in req:
     print(f"{tweet}\n\n")
     media = []
-    texte = tweet["full_text"]
     try:
         media = tweet["extended_entities"]["media"]
     except:
@@ -34,8 +34,8 @@ for tweet in req:
         images.append(image["media_url"])
 
     embeds = [{
-        "description": texte,
-        "title": "tweet",
+        "description": tweet["full_text"],
+        "title": tweet["user"]["name"]+f" (@{tweet['user']['screen_name']})",
         "image": {
             "url": images[0] if len(images)>0 else None
         }
