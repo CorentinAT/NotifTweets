@@ -14,7 +14,6 @@ params = {
     "screen_name": "cocosupersympa",
     "exclude_replies": True,
     "tweet_mode": "extended",
-    "count": 1,
 }
 
 response = requests.get(url, params=params, headers=headers)
@@ -22,6 +21,7 @@ response = requests.get(url, params=params, headers=headers)
 req = response.json()
 
 for tweet in req:
+    print(f"{tweet}\n\n")
     media = []
     texte = tweet["full_text"]
     try:
@@ -37,12 +37,7 @@ for tweet in req:
         "description": texte,
         "title": "tweet",
         "image": {
-            "url": images[0]
-        }
-    },
-    {
-        "image": {
-            "url": images[1]
+            "url": images[0] if len(images)>0 else None
         }
     }]
     message = {
