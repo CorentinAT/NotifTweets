@@ -12,7 +12,7 @@ headers = {
 url = "https://api.twitter.com/1.1/statuses/user_timeline.json"
 
 params = {
-    "screen_name": "rebeudeter",
+    "screen_name": "marc_le_marco",
     "exclude_replies": True,
     "tweet_mode": "extended",
 }
@@ -36,6 +36,10 @@ for tweet in req:
     embeds = [{
         "description": tweet["full_text"],
         "title": tweet["user"]["name"]+f" (@{tweet['user']['screen_name']})",
+        "color": 3092479,
+        "thumbnail": {
+            "url": tweet["user"]["profile_image_url"]
+        },
         "image": {
             "url": images[0] if len(images)>0 else None
         }
