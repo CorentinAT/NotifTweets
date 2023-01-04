@@ -3,11 +3,10 @@ import os
 import requests
 
 def envoyer_timeline(abonnements:list)->None:
+    load_dotenv()
+    webhook = os.getenv("webhook")
+    bearer_token = os.getenv("bearer_token")
     for arobase in abonnements:
-        load_dotenv()
-        webhook = os.getenv("webhook")
-        bearer_token = os.getenv("bearer_token")
-
         url = "https://api.twitter.com/1.1/statuses/user_timeline.json"
         headers = {
             "Authorization": f"Bearer {bearer_token}"
@@ -16,6 +15,7 @@ def envoyer_timeline(abonnements:list)->None:
             "screen_name": arobase,
             "exclude_replies": True,
             "tweet_mode": "extended",
+            "count": 500
         }
 
         response = requests.get(url, params=params, headers=headers)
@@ -49,5 +49,5 @@ def envoyer_timeline(abonnements:list)->None:
             }
             requests.post(webhook, json=message)
 
-timeline = ["marc_le_marco", "grofou_", "ndoki94_"]
+timeline = ["ndoki94_"]
 envoyer_timeline(timeline)
