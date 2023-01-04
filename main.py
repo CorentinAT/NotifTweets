@@ -64,9 +64,14 @@ def envoyer_timeline(abonnements:list)->None:
             }
             requests.post(webhook, json=message)
         if len(req)>0:
-            with open("derniers_tweets.csv", "a", newline="", encoding="utf-8") as fichiercsv:
-                writer = csv.writer(fichiercsv)
-                writer.writerow([arobase, req[0]["id"]])
+            id_csv = req[0]["id"]
+        else:
+            for element in tab:
+                if element[0]==arobase:
+                    id_csv = element[1]
+        with open("derniers_tweets.csv", "a", newline="", encoding="utf-8") as fichiercsv:
+            writer = csv.writer(fichiercsv)
+            writer.writerow([arobase, id_csv])
 
-timeline = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue"]
+timeline = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
 envoyer_timeline(timeline)
