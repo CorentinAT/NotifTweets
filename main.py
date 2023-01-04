@@ -1,12 +1,27 @@
 from dotenv import load_dotenv
 import os
 import requests
+import csv
 
 def envoyer_timeline(abonnements:list)->None:
     load_dotenv()
     webhook = os.getenv("webhook")
     bearer_token = os.getenv("bearer_token")
+    tab = []
+    try:
+        with open("derniers_tweets.csv", "r", newline="") as fichiercsv:
+            reader = csv.reader(fichiercsv)
+            for row in reader:
+                tab.append(row)
+    except:
+        pass
+    with open("derniers_tweets.csv", "w", newline="") as fichiercsv:
+        pass
     for arobase in abonnements:
+        last_id = 0
+        for element in tab:
+            if element[0] == arobase:
+                last_id = element[1]
         url = "https://api.twitter.com/1.1/statuses/user_timeline.json"
         headers = {
             "Authorization": f"Bearer {bearer_token}"
@@ -15,7 +30,7 @@ def envoyer_timeline(abonnements:list)->None:
             "screen_name": arobase,
             "exclude_replies": True,
             "tweet_mode": "extended",
-            "count": 500
+            "since_id": last_id if last_id!=0 else None
         }
 
         response = requests.get(url, params=params, headers=headers)
@@ -48,6 +63,10 @@ def envoyer_timeline(abonnements:list)->None:
                 "embeds": embeds
             }
             requests.post(webhook, json=message)
+        if len(req)>0:
+            with open("derniers_tweets.csv", "a", newline="", encoding="utf-8") as fichiercsv:
+                writer = csv.writer(fichiercsv)
+                writer.writerow([arobase, req[0]["id"]])
 
-timeline = ["ndoki94_"]
+timeline = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue"]
 envoyer_timeline(timeline)
