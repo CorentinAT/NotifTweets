@@ -30,6 +30,7 @@ def envoyer_timeline(abonnements:list)->None:
             "screen_name": arobase,
             "exclude_replies": True,
             "tweet_mode": "extended",
+            "count": 500,
             "since_id": last_id if last_id!=0 else None
         }
 
