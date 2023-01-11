@@ -3,7 +3,7 @@ import os
 import requests
 import csv   
 
-def envoyer_tweet(tweet, arobase, webhook):
+def send_tweet(tweet, arobase, webhook):
     try:
         tweet = tweet["retweeted_status"]
         retweet = 1
@@ -36,23 +36,23 @@ def envoyer_tweet(tweet, arobase, webhook):
         "embeds": embeds
     }
     if retweet==1:
-        message["content"] = f"Retweeté par : **@{arobase}**"
+        message["content"] = f"Retweeted by : **@{arobase}**"
     requests.post(webhook, json=message)
 
 
-def envoyer_timeline(abonnements:list)->None:
+def send_timeline(timeline:list)->None:
     load_dotenv()
     webhook = os.getenv("webhook")
     bearer_token = os.getenv("bearer_token")
     tab = []
     try:
-        with open("derniers_tweets.csv", "r", newline="") as fichiercsv:
-            reader = csv.reader(fichiercsv)
+        with open("derniers_tweets.csv", "r", newline="") as csvfile:
+            reader = csv.reader(csvfile)
             for row in reader:
                 tab.append(row)
     except:
         pass
-    with open("derniers_tweets.csv", "w", newline="") as fichiercsv:
+    with open("last_tweets.csv", "w", newline="") as csvfile:
         pass
     for arobase in abonnements:
         last_id = 0
@@ -75,16 +75,16 @@ def envoyer_timeline(abonnements:list)->None:
         req = response.json()
 
         for tweet in req:
-            envoyer_tweet(tweet, arobase, webhook)
+            send_tweet(tweet, arobase, webhook)
         if len(req)>0:
             id_csv = req[0]["id"]
         else:
             for element in tab:
                 if element[0]==arobase:
                     id_csv = element[1]
-        with open("derniers_tweets.csv", "a", newline="", encoding="utf-8") as fichiercsv:
-            writer = csv.writer(fichiercsv)
+        with open("last_tweets.csv", "a", newline="", encoding="utf-8") as csvfile:
+            writer = csv.writer(csvfile)
             writer.writerow([arobase, id_csv])
 
-abonnements = ["marc_le_marco", "archethic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
-envoyer_timeline(abonnements)
+timeline = ["marc_le_marco", "archethic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
+send_timeline(timeline)
