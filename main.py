@@ -3,7 +3,7 @@ import os
 import requests
 import csv   
 
-def envoyer_tweet(tweet):
+def envoyer_tweet(tweet, arobase, webhook):
     try:
         tweet = tweet["retweeted_status"]
         retweet = 1
@@ -79,7 +79,7 @@ def envoyer_timeline(abonnements:list)->None:
         req = response.json()
 
         for tweet in req:
-            envoyer_tweet(tweet)
+            envoyer_tweet(tweet, arobase, webhook)
         if len(req)>0:
             id_csv = req[0]["id"]
         else:
@@ -90,5 +90,5 @@ def envoyer_timeline(abonnements:list)->None:
             writer = csv.writer(fichiercsv)
             writer.writerow([arobase, id_csv])
 
-abonnements = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
+abonnements = ["marc_le_marco", "archethic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
 envoyer_timeline(abonnements)
