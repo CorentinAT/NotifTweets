@@ -38,6 +38,12 @@ def envoyer_timeline(abonnements:list)->None:
         req = response.json()
 
         for tweet in req:
+            try:
+                tweet = tweet["retweeted_status"]
+                retweet = 1
+            except:
+                retweet = 0
+                pass
             print(f"{tweet}\n\n")
             media = []
             try:
@@ -60,9 +66,15 @@ def envoyer_timeline(abonnements:list)->None:
                     "url": images[0] if len(images)>0 else None
                 }
             }]
-            message = {
-                "embeds": embeds
-            }
+            if retweet==1:
+                message = {
+                    "content": f"Retweeté par : **@{arobase}**",
+                    "embeds": embeds
+                }
+            else:
+                message = {
+                    "embeds": embeds
+                }
             requests.post(webhook, json=message)
         if len(req)>0:
             id_csv = req[0]["id"]
@@ -74,5 +86,5 @@ def envoyer_timeline(abonnements:list)->None:
             writer = csv.writer(fichiercsv)
             writer.writerow([arobase, id_csv])
 
-timeline = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
-envoyer_timeline(timeline)
+abonnements = ["marc_le_marco", "archetic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
+envoyer_timeline(abonnements)
