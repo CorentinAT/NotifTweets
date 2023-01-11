@@ -27,4 +27,4 @@ Not finished (~40%)
 - Separate the code into several functions to make it cleaner
 - Take into account the quoted tweets
 - Get all the images of the tweet
-- Make the requests asynchronous to have a mixed timeline, and a faster execution
+- Make the requests asynchronous to have a mixed timeline, and a faster executions
