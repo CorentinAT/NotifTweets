@@ -1,9 +1,47 @@
 from dotenv import load_dotenv
 import os
 import requests
-import csv
+import csv   
 
 def envoyer_tweet(tweet):
+    try:
+        tweet = tweet["retweeted_status"]
+        retweet = 1
+    except:
+        retweet = 0
+        pass
+    print(f"{tweet}\n\n")
+    media = []
+    try:
+        media = tweet["extended_entities"]["media"]
+    except:
+        pass
+
+    images = []
+    for image in media:
+        images.append(image["media_url"])
+
+    embeds = [{
+        "description": tweet["full_text"],
+        "title": tweet["user"]["name"]+f" (@{tweet['user']['screen_name']})",
+        "color": 3092479,
+        "thumbnail": {
+            "url": tweet["user"]["profile_image_url"]
+        },
+        "image": {
+            "url": images[0] if len(images)>0 else None
+        }
+    }]
+    if retweet==1:
+        message = {
+            "content": f"Retweeté par : **@{arobase}**",
+            "embeds": embeds
+        }
+    else:
+        message = {
+            "embeds": embeds
+        }
+    requests.post(webhook, json=message)
 
 
 def envoyer_timeline(abonnements:list)->None:
@@ -33,7 +71,7 @@ def envoyer_timeline(abonnements:list)->None:
             "screen_name": arobase,
             "exclude_replies": True,
             "tweet_mode": "extended",
-            "count": 500,
+            "count": 500 if last_id != 0 else 50,
             "since_id": last_id if last_id!=0 else None
         }
 
@@ -41,44 +79,7 @@ def envoyer_timeline(abonnements:list)->None:
         req = response.json()
 
         for tweet in req:
-            try:
-                tweet = tweet["retweeted_status"]
-                retweet = 1
-            except:
-                retweet = 0
-                pass
-            print(f"{tweet}\n\n")
-            media = []
-            try:
-                media = tweet["extended_entities"]["media"]
-            except:
-                pass
-
-            images = []
-            for image in media:
-                images.append(image["media_url"])
-
-            embeds = [{
-                "description": tweet["full_text"],
-                "title": tweet["user"]["name"]+f" (@{tweet['user']['screen_name']})",
-                "color": 3092479,
-                "thumbnail": {
-                    "url": tweet["user"]["profile_image_url"]
-                },
-                "image": {
-                    "url": images[0] if len(images)>0 else None
-                }
-            }]
-            if retweet==1:
-                message = {
-                    "content": f"Retweeté par : **@{arobase}**",
-                    "embeds": embeds
-                }
-            else:
-                message = {
-                    "embeds": embeds
-                }
-            requests.post(webhook, json=message)
+            envoyer_tweet(tweet)
         if len(req)>0:
             id_csv = req[0]["id"]
         else:
