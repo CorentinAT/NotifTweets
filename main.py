@@ -32,15 +32,11 @@ def envoyer_tweet(tweet, arobase, webhook):
             "url": images[0] if len(images)>0 else None
         }
     }]
+    message = {
+        "embeds": embeds
+    }
     if retweet==1:
-        message = {
-            "content": f"Retweeté par : **@{arobase}**",
-            "embeds": embeds
-        }
-    else:
-        message = {
-            "embeds": embeds
-        }
+        message["content"] = f"Retweeté par : **@{arobase}**"
     requests.post(webhook, json=message)
 
 
@@ -71,7 +67,7 @@ def envoyer_timeline(abonnements:list)->None:
             "screen_name": arobase,
             "exclude_replies": True,
             "tweet_mode": "extended",
-            "count": 500 if last_id != 0 else 50,
+            "count": 500 if last_id != 0 else 30,
             "since_id": last_id if last_id!=0 else None
         }
 
