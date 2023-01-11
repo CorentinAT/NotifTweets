@@ -1,24 +1,30 @@
 # NotifTweets
 
-Programme qui envoie une timeline twitter donnée sur discord via un webhook.
+Program that sends a given twitter timeline to discord via a webhook.
 
-Il utilise l'api de twitter version 1.1, et l'api des webhooks discord.
+It uses the twitter api version 1.1, and the discord webhook api.
 
-# Statut
+## Status
 
-Pas terminé (~40%)
+Not finished (~40%)
 
-# Fait
+## Done
 
-- Récupération de tous les tweets depuis un tweet choisi, avec toutes les informations nécessaires (arobase, tn, pp, contenu texte du tweet)
-- Récupération de la première image du tweet
-- Sauvegarde du dernier tweet envoyé par arobase dans le fichier "derniers_tweets.csv" pour qu'il ne soient pas renvoyé à la prochaine exécution
-- Mise en forme du tweet pour intégrer sur discord en embed
-- Prise en compte des retweets : envoi du tweet retweeté avec, en plus, l'arobase de la personne qui l'a retweeté
+### 03/01/2023
+- Retrieve all tweets from a selected tweet, with all necessary information (arobase, tn, pp, text content of the tweet)
+- Formatting of the tweet for embedding on discord
+- Retrieve and send the first image of the tweet
 
-# A faire
+### 04/01/2023
+- Works with a list of arobases
+- Save the last tweet sent by arobase in the file "derniers_tweets.csv" so that it is not sent back the next time it is executed
 
-- Séparer le code en plusieurs fonctions pour le rendre plus propre
-- Prendre en compte les tweets cités
-- Récupérer toutes les images du tweet
-- Passer les requêtes en asynchronisé pour avoir une timeline mélangée, et une exécution plus rapide
+### 11/01/2023
+- Taking into account of retweets : sending of the retweeted tweet with, in addition, the arobase of the person who retweeted it
+
+## To do
+
+- Separate the code into several functions to make it cleaner
+- Take into account the quoted tweets
+- Get all the images of the tweet
+- Make the requests asynchronous to have a mixed timeline, and a faster execution

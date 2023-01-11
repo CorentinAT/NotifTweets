@@ -3,6 +3,9 @@ import os
 import requests
 import csv
 
+def envoyer_tweet(tweet):
+
+
 def envoyer_timeline(abonnements:list)->None:
     load_dotenv()
     webhook = os.getenv("webhook")
