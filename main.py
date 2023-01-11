@@ -54,7 +54,7 @@ def send_timeline(timeline:list)->None:
         pass
     with open("last_tweets.csv", "w", newline="") as csvfile:
         pass
-    for arobase in abonnements:
+    for arobase in timeline:
         last_id = 0
         for element in tab:
             if element[0] == arobase:
