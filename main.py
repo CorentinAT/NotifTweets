@@ -86,5 +86,5 @@ def send_timeline(timeline:list)->None:
             writer = csv.writer(csvfile)
             writer.writerow([arobase, id_csv])
 
-timeline = ["marc_le_marco", "archethic", "arkunir", "rebeudeter", "kingazo13", "aminematue", "ndoki94_"]
+timeline = ["marc_le_marco", "archethic", "kingazo13", "Un4v5s8bgsVk9Xp"]
 send_timeline(timeline)
