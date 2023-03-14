@@ -46,7 +46,7 @@ def send_timeline(timeline:list)->None:
     bearer_token = os.getenv("bearer_token")
     tab = []
     try:
-        with open("derniers_tweets.csv", "r", newline="") as csvfile:
+        with open("last_tweets.csv", "r", newline="") as csvfile:
             reader = csv.reader(csvfile)
             for row in reader:
                 tab.append(row)
