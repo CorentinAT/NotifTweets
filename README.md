@@ -8,6 +8,8 @@ It uses the twitter api version 1.1, and the discord webhook api.
 
 Not finished (~40%)
 
+Abandoned due to Elon Musk making his API available for a fee.
+
 ## Done
 
 ### 01/03/2023
